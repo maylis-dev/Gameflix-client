@@ -5,6 +5,7 @@ import type { games } from "../../types/games";
 import API from "../../services/api";
 import Modals from "../../components/modals/index";
 import Navbar from "@/components/navbar/navbar";
+import index from "../discover/explore/index";
 
 type Props = {
   games: games[];
