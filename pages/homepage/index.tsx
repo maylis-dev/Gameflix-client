@@ -1,4 +1,5 @@
 "use client";
+import "../../app/globals.css";
 
 import { useEffect, useState } from "react";
 import type { games } from "../../types/games";
@@ -39,7 +40,7 @@ export default function Homepage({ games }: Props) {
   }
 
   return (
-    <div>
+    <div className="bg-red-500">
       <Navbar />
       {allGames.map((game) => (
         <div key={game.id}>
