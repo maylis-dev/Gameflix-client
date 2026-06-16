@@ -1,21 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import API from "../../../services/api";
-import Navbar from "@/components/navbar/navbar";
+
+import API from "@/services/api";
 import { games } from "@/types/games";
 import Modals from "@/components/modals";
 
-type Props = {
-  games: games[];
-};
-
-export default function Discover({ games }: Props) {
+export default function Discover() {
   const [selectedGames, setSelectedGames] = useState<games[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-
   // NEW: stores the chosen genre
   const [selectedGenre, setSelectedGenre] = useState("");
   const [open, setOpen] = useState(false);
@@ -31,7 +27,7 @@ export default function Discover({ games }: Props) {
 
       setSelectedGames(response.data);
     } catch (error) {
-      console.log("failed to fetch games");
+      console.log("failed to fetch games: ", error);
     } finally {
       setLoading(false);
     }
@@ -49,8 +45,6 @@ export default function Discover({ games }: Props) {
 
   return (
     <div>
-      <Navbar />
-
       <input
         type="text"
         placeholder="Search for a game..."
@@ -84,7 +78,8 @@ export default function Discover({ games }: Props) {
 
             <p>Genre: {game.genre}</p>
 
-            <img
+            <Image
+              alt="image"
               src={game.photoGame}
               style={{
                 width: "150px",
@@ -138,7 +133,8 @@ export default function Discover({ games }: Props) {
           <div key={game.id}>
             <p>{game.name}</p>
             <p>Genre: {game.genre}</p>
-            <img
+            <Image
+              alt=""
               src={game.photoGame}
               style={{
                 width: "150px",
@@ -171,7 +167,8 @@ export default function Discover({ games }: Props) {
           <div key={game.id}>
             <p>{game.name}</p>
             <p>Language: {game.language}</p>
-            <img
+            <Image
+              alt=""
               src={game.photoGame}
               style={{
                 width: "150px",
@@ -194,7 +191,7 @@ export default function Discover({ games }: Props) {
           <div className="max-w-md">
             <h1 className="text-2xl font-bold">{selectedGame.name}</h1>
 
-            <img src={selectedGame.photoGame} className="w-80 mt-2" />
+            <Image alt="" src={selectedGame.photoGame} className="w-80 mt-2" />
 
             <p>
               <strong>Description:</strong> {selectedGame.description}

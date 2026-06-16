@@ -1,31 +1,24 @@
 "use client";
-import "../../app/globals.css";
-
 import { useEffect, useState } from "react";
+import Image from "next/image";
+
 import type { games } from "../../types/games";
 import API from "../../services/api";
 import Modals from "../../components/modals/index";
-import Navbar from "@/components/navbar/navbar";
-import index from "../discover/explore/index";
 
-type Props = {
-  games: games[];
-};
-
-export default function Homepage({ games }: Props) {
+const Homepage = () => {
   const [allGames, setAllGames] = useState<games[]>([]);
-  const [loading, setLoading] = useState(true);
-
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [selectedGame, setSelectedGame] = useState<games | null>(null);
 
   const getGames = async () => {
+    setLoading(true);
     try {
       const response = await API.get(`${process.env.NEXT_PUBLIC_API_URL}`);
-
       setAllGames(response.data);
     } catch (error) {
-      console.log("failed to fetch games");
+      console.log("failed to fetch games: ", error);
     } finally {
       setLoading(false);
     }
@@ -41,12 +34,11 @@ export default function Homepage({ games }: Props) {
 
   return (
     <div className="bg-red-500">
-      <Navbar />
       {allGames.map((game) => (
         <div key={game.id}>
           <p>{game.name}</p>
-
-          <img
+          <Image
+            alt={"logo"}
             src={game.photoGame}
             style={{
               width: "150px",
@@ -60,7 +52,6 @@ export default function Homepage({ games }: Props) {
           />
         </div>
       ))}
-
       <Modals
         isOpen={open}
         onClose={() => {
@@ -137,4 +128,6 @@ export default function Homepage({ games }: Props) {
       </Modals>
     </div>
   );
-}
+};
+
+export default Homepage;
