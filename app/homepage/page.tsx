@@ -40,10 +40,8 @@ const Homepage = () => {
           <Image
             alt={"logo"}
             src={game.photoGame}
-            style={{
-              width: "150px",
-              cursor: "pointer",
-            }}
+            width={150}
+            height={150}
             onClick={() => {
               console.log("clicked", game.name);
               setSelectedGame(game);
@@ -52,6 +50,59 @@ const Homepage = () => {
           />
         </div>
       ))}
+
+      {/*trendy games*/}
+      <div className="bg-blue-500">
+        <h2 className="text-2xl font-bold mb-4">Trending Games</h2>
+        {allGames
+          .filter((game) => game.istrending)
+          .map((trendyGame) => (
+            <div key={trendyGame.id}>
+              <p>{trendyGame.name}</p>
+              <Image
+                alt={"logo"}
+                src={trendyGame.photoGame}
+                width={150}
+                height={150}
+                onClick={() => {
+                  console.log("clicked", trendyGame.name);
+                  setSelectedGame(trendyGame);
+                  setOpen(true);
+                }}
+              />
+            </div>
+          ))}
+      </div>
+
+      {/* new games */}
+      <div>
+        <h2 className="text-2xl font-bold mb-4">New Games</h2>
+        {allGames
+          .filter((game) => {
+            const releaseDate = new Date(game.releaseDate);
+            const currentDate = new Date();
+            const oneMonthAgo = new Date();
+            oneMonthAgo.setMonth(currentDate.getMonth() - 1);
+            return releaseDate >= oneMonthAgo && releaseDate <= currentDate;
+          })
+          .map((newGame) => (
+            <div key={newGame.id}>
+              <p>{newGame.name}</p>
+              <Image
+                alt={"logo"}
+                src={newGame.photoGame}
+                width={150}
+                height={150}
+                onClick={() => {
+                  console.log("clicked", newGame.name);
+                  setSelectedGame(newGame);
+                  setOpen(true);
+                }}
+              />
+            </div>
+          ))}
+      </div>
+
       <Modals
         isOpen={open}
         onClose={() => {
