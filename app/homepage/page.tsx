@@ -1,31 +1,24 @@
 "use client";
-import "../../app/globals.css";
-
 import { useEffect, useState } from "react";
+import Image from "next/image";
+
 import type { games } from "../../types/games";
 import API from "../../services/api";
 import Modals from "../../components/modals/index";
-import Navbar from "@/components/navbar/navbar";
-import index from "../discover/explore/index";
 
-type Props = {
-  games: games[];
-};
-
-export default function Homepage({ games }: Props) {
+const Homepage = () => {
   const [allGames, setAllGames] = useState<games[]>([]);
-  const [loading, setLoading] = useState(true);
-
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [selectedGame, setSelectedGame] = useState<games | null>(null);
 
   const getGames = async () => {
+    setLoading(true);
     try {
       const response = await API.get(`${process.env.NEXT_PUBLIC_API_URL}`);
-
       setAllGames(response.data);
     } catch (error) {
-      console.log("failed to fetch games");
+      console.log("failed to fetch games: ", error);
     } finally {
       setLoading(false);
     }
@@ -41,17 +34,14 @@ export default function Homepage({ games }: Props) {
 
   return (
     <div className="bg-red-500">
-      <Navbar />
       {allGames.map((game) => (
         <div key={game.id}>
           <p>{game.name}</p>
-
-          <img
+          <Image
+            alt={"logo"}
             src={game.photoGame}
-            style={{
-              width: "150px",
-              cursor: "pointer",
-            }}
+            width={150}
+            height={150}
             onClick={() => {
               console.log("clicked", game.name);
               setSelectedGame(game);
@@ -60,6 +50,58 @@ export default function Homepage({ games }: Props) {
           />
         </div>
       ))}
+
+      {/*trendy games*/}
+      <div className="bg-blue-500">
+        <h2 className="text-2xl font-bold mb-4">Trending Games</h2>
+        {allGames
+          .filter((game) => game.istrending)
+          .map((trendyGame) => (
+            <div key={trendyGame.id}>
+              <p>{trendyGame.name}</p>
+              <Image
+                alt={"logo"}
+                src={trendyGame.photoGame}
+                width={150}
+                height={150}
+                onClick={() => {
+                  console.log("clicked", trendyGame.name);
+                  setSelectedGame(trendyGame);
+                  setOpen(true);
+                }}
+              />
+            </div>
+          ))}
+      </div>
+
+      {/* new games */}
+      <div>
+        <h2 className="text-2xl font-bold mb-4">New Games</h2>
+        {allGames
+          .filter((game) => {
+            const releaseDate = new Date(game.releaseDate);
+            const currentDate = new Date();
+            const oneMonthAgo = new Date();
+            oneMonthAgo.setMonth(currentDate.getMonth() - 1);
+            return releaseDate >= oneMonthAgo && releaseDate <= currentDate;
+          })
+          .map((newGame) => (
+            <div key={newGame.id}>
+              <p>{newGame.name}</p>
+              <Image
+                alt={"logo"}
+                src={newGame.photoGame}
+                width={150}
+                height={150}
+                onClick={() => {
+                  console.log("clicked", newGame.name);
+                  setSelectedGame(newGame);
+                  setOpen(true);
+                }}
+              />
+            </div>
+          ))}
+      </div>
 
       <Modals
         isOpen={open}
@@ -137,4 +179,6 @@ export default function Homepage({ games }: Props) {
       </Modals>
     </div>
   );
-}
+};
+
+export default Homepage;
