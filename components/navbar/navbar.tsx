@@ -1,19 +1,29 @@
 import Link from "next/link";
 
 const Navbar = () => (
-  <div className="flex gap-4 p-4 bg-blue-950 text-white border-b border-blue-800">
+  <div className="grid grid-cols-1 justify-items-center
+  md:flex md:flex-row gap-5 items-center
+  px-5 py-4 bg-black text-white">
+  <h1>Gameflix</h1>
+
+
+    
+
+    <div>
     <Link
       href={"/homepage"}
-      className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-500 transition"
+      className="px-4 py-2 rounded text-gray-400 hover:text-white transition focus:text-white focus:outline-violet-500"
     >
       Games
     </Link>
     <Link
       href={"/discover/explore"}
-      className="px-4 py-2 rounded bg-blue-700 hover:bg-blue-600 transition"
+      className="px-4 py-2 rounded text-gray-400 hover:text-white transition focus:text-white focus:outline-violet-500"
     >
       Discover
     </Link>
+    </div>
+
   </div>
 );
 

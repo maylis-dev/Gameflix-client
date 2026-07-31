@@ -15,8 +15,14 @@ const Homepage = () => {
   const getGames = async () => {
     setLoading(true);
     try {
+      //const response = await API.get(`${process.env.NEXT_PUBLIC_API_URL}`);
+      //setAllGames(response.data);
       const response = await API.get(`${process.env.NEXT_PUBLIC_API_URL}`);
-      setAllGames(response.data);
+
+console.log(response.data);
+
+setAllGames(response.data);
+return;
     } catch (error) {
       console.log("failed to fetch games: ", error);
     } finally {
