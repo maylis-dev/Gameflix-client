@@ -7,6 +7,7 @@ import { games } from "@/types/games";
 import Modals from "@/components/modals";
 import ResumePage from "@/app/homepage/resumepage";
 import InfoPage from "@/app/homepage/infopage";
+import futura from "@/app/font";
 
 export default function Discover() {
 	const [searchLoading, setSearchLoading] = useState(false);
@@ -101,16 +102,16 @@ export default function Discover() {
 			<div className="bg-black p-4 rounded-lg   pyshadow-md flex flex-col gap-6 py-8 items-center justify-center md:flex-row md:py-5 md:w-full md:justify-center md:items-center md:gap-4">
 				<input
 					type="text"
-					placeholder="Game name..."
+					placeholder="name..."
 					value={search}
 					onChange={(e) => setSearch(e.target.value)}
-					className="w-full h-9 px-4 rounded-xl  bg-neutral-900 text-white"
+					className="w-full h-9 px-4 rounded-xl  bg-neutral-900 text-white futura normal text-sm"
 				/>
 
 				<select
 					value={selectedGenre}
 					onChange={(e) => setSelectedGenre(e.target.value)}
-					className="w-full h-9 px-4 rounded-xl  bg-neutral-900 text-white">
+					className="w-full h-9 px-4 rounded-xl  bg-neutral-900 text-white futura normal text-sm ">
 					<option value="">Genre</option>
 
 					{genres.map((genre) => (
@@ -125,7 +126,7 @@ export default function Discover() {
 				<select
 					value={selectedLanguage}
 					onChange={(e) => setSelectedLanguage(e.target.value)}
-					className="w-full h-9 px-4 rounded-xl  bg-neutral-900 text-white">
+					className="w-full h-9 px-4 rounded-xl  bg-neutral-900 text-white futura normal text-sm">
 					<option value="">Language</option>
 
 					{language.map((language) => (
@@ -140,7 +141,7 @@ export default function Discover() {
 				<select
 					value={selectedPlatform}
 					onChange={(e) => setSelectedPlatform(e.target.value)}
-					className="w-full h-9 px-4 rounded-xl   bg-neutral-900 text-white">
+					className="w-full h-9 px-4 rounded-xl   bg-neutral-900 text-white futura normal text-sm">
 					<option value="">Platform</option>
 
 					{platforms.map((platform) => (
@@ -155,7 +156,7 @@ export default function Discover() {
 				<select
 					value={classement}
 					onChange={(e) => setClassement(e.target.value)}
-					className="w-full h-9 px-4 rounded-xl  bg-neutral-900 text-white">
+					className="w-full h-9 px-4 rounded-xl  bg-neutral-900 text-white futura normal text-sm ">
 					<option value="">Filter by</option>
 					<option value="dateRelease">Release Date</option>
 					<option value="name-asc">Name (A-Z)</option>
@@ -168,7 +169,7 @@ export default function Discover() {
 
 				<button
 					onClick={handleSearch}
-					className="w-full h-9 bg-neutral-600 text-white rounded-xl">
+					className="w-full h-9 bg-neutral-600 text-white rounded-xl futura normal text-sm hover:bg-neutral-700 transition-colors duration-300 md:w-auto md:px-4">
 					Search
 				</button>
 			</div>
@@ -209,56 +210,109 @@ export default function Discover() {
 					{selectedGame && (
 						<div className="relative w-full">
 							{/* Croix rouge */}
-							<button
-								type="button"
-								className="absolute right-10 top-10 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-black text-xl font-bold text-white hover:bg-gray-800"
-								onClick={() => {
-									setOpen(false);
-									setSelectedGame(null);
-									setShowResume(false);
-									setShowInfo(false);
-								}}>
-								✕
-							</button>
+							<div className="absolute left-10 right-10 top-4 z-50 flex items-start">
+								<p
+									className=" mt-2 max-w-[70%] w-fit rounded-lg bg-black/70 px-2 py-1 text-xs text-white md:text-sm futura normal"
+									style={futura.style}>
+									{selectedGame.description}
+								</p>
+
+								<button
+									type="button"
+									className="ml-auto flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-black text-xl font-bold text-white hover:bg-gray-800"
+									onClick={() => {
+										setOpen(false);
+										setSelectedGame(null);
+										setShowResume(false);
+										setShowInfo(false);
+									}}>
+									✕
+								</button>
+							</div>
 
 							{/* First block in pictures */}
 
+							{/* <div
+												className="relative h-[250px] w-full bg-cover bg-center bg-no-repeat sm:h-[300px] md:h-[400px] lg:h-[450px]"
+												style={{
+													backgroundImage: `url(${selectedGame.headerImage})`,
+												}}>
+												
+												<div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black">
+													<div className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center px-4 pb-4 md:flex-row md:items-end md:px-10">
+														<div className="flex-1 text-center text-white md:text-left">
+															<h1 className="text-lg font-semibold italic uppercase sm:text-2xl md:text-3xl">
+																{selectedGame.name}
+															</h1>
+				
+															<p className="text-sm text-white md:text-base">
+																{new Date(selectedGame.releaseDate).getFullYear()} ·{" "}
+																{selectedGame.platform}
+															</p>
+														</div>
+				
+														<div className="flex-1 text-center text-white md:text-right">
+															<div className="flex justify-center md:justify-end">
+																{[1, 2, 3, 4, 5].map((star) => (
+																	<span
+																		key={star}
+																		className={
+																			star <= selectedGame.rating
+																				? "text-xl text-yellow-400"
+																				: "text-xl text-gray-500"
+																		}>
+																		★
+																	</span>
+																))}
+															</div>
+				
+															<p className="text-sm md:text-base">
+																{selectedGame.rating} ★ votes
+															</p>
+														</div>
+													</div>
+												</div>
+											</div> */}
 							<div
-								className="bg-neutral-700 flex justify-center aspect-video relative
-				px-8 md:px-15 md:pt-72 pb-4 bg-cover bg-center bg-no-repeat"
+								className="relative h-[250px] w-full bg-cover bg-center bg-no-repeat sm:h-[300px] md:h-[350px] lg:h-[400px]"
 								style={{
 									backgroundImage: `url(${selectedGame.headerImage})`,
 								}}>
-								{/* Gradient overlay in pictures */}
-								<div className="absolute z-0 left-0 right-0 top-0 bottom-0 bg-gradient-to-b from-transparent from-50%  to-black to-100%">
-									<div className="absolute md:px-10 bottom-0 md:bottom-5 left-0 right-0 flex z-10 flex-col md:flex-row items-center md:items-end bg-gradient-to-b from-transparent from-50% to-black to-100%">
-										<div className="flex-1 flex flex-col items-center md:items-start text-white">
-											<h1 className="text-lg sm:text-2xl md:text-3xl text-center md:text-left uppercase font-semibold italic text-white">
+								<div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black">
+									<div className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center px-4 pb-3 md:flex-row md:items-end md:px-8">
+										<div className="flex-1 text-center text-white md:text-left">
+											<h1
+												className="text-base font-semibold italic uppercase sm:text-xl md:text-2xl futura italic"
+												style={futura.style}>
 												{selectedGame.name}
 											</h1>
-											<p className="text-sm md:text-base text-center md:text-left text-white">
-												{/* {new Date(selectedGame.releaseDate).toLocaleDateString()}. */}
-												{new Date(selectedGame.releaseDate).getFullYear()} .
-												{selectedGame.platform}
+
+											<p
+												className="text-xs text-white/90 sm:text-sm md:text-sm futura normal"
+												style={futura.style}>
+												{new Date(selectedGame.releaseDate).getFullYear()} ·{" "}
+												{selectedGame.platform?.replace(/,\s*/g, " · ")}
 											</p>
 										</div>
 
-										<div className="flex-1 flex flex-col items-center md:items-end text-white">
-											<div className="flex">
+										<div className="mt-2 flex-1 text-center text-white md:mt-0 md:text-right">
+											<div className="flex justify-center md:justify-end">
 												{[1, 2, 3, 4, 5].map((star) => (
 													<span
 														key={star}
 														className={
 															star <= selectedGame.rating
-																? "text-yellow-400 text-xl"
-																: "text-gray-500 text-xl"
+																? "text-base text-yellow-400 sm:text-lg"
+																: "text-base text-gray-500 sm:text-lg"
 														}>
 														★
 													</span>
 												))}
 											</div>
 
-											<p className="text-sm md:text-base text-center md:text-left text-white">
+											<p
+												className="text-xs sm:text-sm md:text-sm futura normal"
+												style={futura.style}>
 												{selectedGame.rating} ★ votes
 											</p>
 										</div>
@@ -276,7 +330,7 @@ export default function Discover() {
 												setShowResume(true);
 												setShowInfo(false);
 											}}
-											className={`text-lg md:text-xl uppercase font-semibold italic px-2 py-1 ${
+											className={`text-lg md:text-xl uppercase font-semibold italic futura italic px-2 py-1 ${
 												showResume
 													? "border-b-2 border-white text-white"
 													: "text-gray-300"
@@ -290,7 +344,7 @@ export default function Discover() {
 												setShowResume(false);
 												setShowInfo(true);
 											}}
-											className="text-lg md:text-xl uppercase font-semibold italic  focus:border-b-2 focus:border-white hover: text-white">
+											className="text-lg md:text-xl uppercase font-semibold italic   futura italic focus:border-b-2 focus:border-white hover: text-white">
 											Info
 										</button>
 									</nav>
@@ -303,29 +357,41 @@ export default function Discover() {
 								</div>
 
 								{/* {troissiemen blocks sur le cote} */}
-								<div className="flex flex-col  gap-2 bg-neutral-800 p-4 rounded-lg shadow-md ">
-									<h2 className="uppercase font-semibold italic">Language</h2>
-									<p className="text-sm md:text-base">
+								<div
+									className="flex flex-col  gap-2 bg-neutral-800 p-4 rounded-lg shadow-md  futura italic"
+									style={futura.style}>
+									<h2
+										className="uppercase font-semibold futura italic"
+										style={futura.style}>
+										Language
+									</h2>
+									<p
+										className="text-sm md:text-base futura normal"
+										style={futura.style}>
 										{selectedGame.language}
 									</p>
 
-									<h2 className="uppercase font-semibold italic">
+									<h2
+										className="uppercase font-semibold futura italic"
+										style={futura.style}>
 										Date de sortie
 									</h2>
 
-									<p className="text-sm md:text-base">
+									<p
+										className="text-sm md:text-base futura normal"
+										style={futura.style}>
 										{new Date(selectedGame.releaseDate).toLocaleDateString()}
 									</p>
 
 									{/* <p>
-									<strong>Status:</strong> {selectedGame.status}
-								</p> */}
+													<strong>Status:</strong> {selectedGame.status}
+												</p> */}
 									<h2 className="uppercase font-semibold italic">Prix</h2>
 									<p className="text-sm md:text-base">{selectedGame.price} €</p>
 
 									<button>
 										<a
-											// href={selectedGame.link}
+											href={selectedGame.shopLink}
 											target="_blank"
 											rel="noopener noreferrer"
 											className="bg-white hover:bg-blue-700 py-1 px-10 mt-4 text-black font-bold rounded-md md:px-4 md:py-1 text-sm md:text-base w-full text-center whitespace-nowrap">

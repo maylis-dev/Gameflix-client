@@ -8,6 +8,7 @@ import type { games } from "../../types/games";
 import API from "../../services/api";
 import Modals from "../../components/modals/index";
 import InfoPage from "./infopage";
+import futura from "../font";
 
 type InfoPageProps = {
 	game: games | null;
@@ -49,7 +50,8 @@ const Homepage = () => {
 
 	return (
 		<div className="">
-			<div className="bg-gray-800 flex flex-col  justify-start p-4  shadow-md gap-4 overflow-x-auto">
+			{/* All Games */}
+			{/* <div className="bg-gray-800 flex flex-col  justify-start p-4  shadow-md gap-4 overflow-x-auto">
 				<h2 className="text-2xl font-bold uppercase italic justify-start">
 					All Games
 				</h2>
@@ -58,7 +60,7 @@ const Homepage = () => {
 						<div
 							key={game.id}
 							className="flex-shrink-0">
-							{/* <p>{game.name} </p> */}
+							
 							<Image
 								className="object-cover w-50 h-80 border rounded-lg shadow-md cursor-pointer hover:scale-102 transition-transform duration-300"
 								alt={"logo"}
@@ -76,13 +78,13 @@ const Homepage = () => {
 						</div>
 					))}
 				</div>
-			</div>
+			</div> */}
 
 			{/*trendy games*/}
-			<div className="bg-gray-800  flex flex-col  justify-start p-4  shadow-md gap-4 overflow-x-auto">
+			<div className="bg-gray-800  flex flex-col  justify-start p-4  shadow-md gap-4 overflow-x-auto ">
 				<div>
-					<h2 className="text-2xl font-bold uppercase italic justify-start">
-						Trending Games
+					<h2 className="text-2xl font-bold uppercase italic  mb-3">
+						Trendy Games
 					</h2>
 					<div className="flex flex-row gap-4 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-transparent">
 						{allGames
@@ -101,6 +103,8 @@ const Homepage = () => {
 										onClick={() => {
 											console.log("clicked", trendyGame.name);
 											setSelectedGame(trendyGame);
+											setShowResume(true);
+											setShowInfo(false);
 											setOpen(true);
 										}}
 									/>
@@ -112,7 +116,7 @@ const Homepage = () => {
 
 			{/* Most Recent Games */}
 			<div className="bg-gray-800 flex flex-col justify-start p-4  shadow-md gap-4 overflow-x-auto">
-				<h2 className="text-2xl font-bold uppercase italic">
+				<h2 className="text-2xl font-bold uppercase italic mb-3">
 					Most Recent Games
 				</h2>
 
@@ -137,6 +141,8 @@ const Homepage = () => {
 									onClick={() => {
 										console.log("clicked", newGame.name);
 										setSelectedGame(newGame);
+										setShowResume(true);
+										setShowInfo(false);
 										setOpen(true);
 									}}
 								/>
@@ -190,7 +196,9 @@ const Homepage = () => {
 					<div className="relative w-full">
 						{/* Croix rouge */}
 						<div className="absolute left-10 right-10 top-4 z-50 flex items-start">
-							<p className=" mt-2 max-w-[70%] w-fit rounded-lg bg-black/70 px-2 py-1 text-xs text-white md:text-sm">
+							<p
+								className=" mt-2 max-w-[70%] w-fit rounded-lg bg-black/70 px-2 py-1 text-xs text-white md:text-sm futura normal"
+								style={futura.style}>
 								{selectedGame.description}
 							</p>
 
@@ -258,13 +266,17 @@ const Homepage = () => {
 							<div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black">
 								<div className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-center px-4 pb-3 md:flex-row md:items-end md:px-8">
 									<div className="flex-1 text-center text-white md:text-left">
-										<h1 className="text-base font-semibold italic uppercase sm:text-xl md:text-2xl">
+										<h1
+											className="text-base font-semibold italic uppercase sm:text-xl md:text-2xl futura italic"
+											style={futura.style}>
 											{selectedGame.name}
 										</h1>
 
-										<p className="text-xs text-white/90 sm:text-sm md:text-sm">
+										<p
+											className="text-xs text-white/90 sm:text-sm md:text-sm futura normal"
+											style={futura.style}>
 											{new Date(selectedGame.releaseDate).getFullYear()} ·{" "}
-											{selectedGame.platform}
+											{selectedGame.platform?.replace(/,\s*/g, " · ")}
 										</p>
 									</div>
 
@@ -283,7 +295,9 @@ const Homepage = () => {
 											))}
 										</div>
 
-										<p className="text-xs sm:text-sm">
+										<p
+											className="text-xs sm:text-sm md:text-sm futura normal"
+											style={futura.style}>
 											{selectedGame.rating} ★ votes
 										</p>
 									</div>
@@ -301,7 +315,7 @@ const Homepage = () => {
 											setShowResume(true);
 											setShowInfo(false);
 										}}
-										className={`text-lg md:text-xl uppercase font-semibold italic px-2 py-1 ${
+										className={`text-lg md:text-xl uppercase font-semibold italic futura italic px-2 py-1 ${
 											showResume
 												? "border-b-2 border-white text-white"
 												: "text-gray-300"
@@ -315,7 +329,7 @@ const Homepage = () => {
 											setShowResume(false);
 											setShowInfo(true);
 										}}
-										className="text-lg md:text-xl uppercase font-semibold italic  focus:border-b-2 focus:border-white hover: text-white">
+										className="text-lg md:text-xl uppercase font-semibold italic   futura italic focus:border-b-2 focus:border-white hover: text-white">
 										Info
 									</button>
 								</nav>
@@ -328,15 +342,29 @@ const Homepage = () => {
 							</div>
 
 							{/* {troissiemen blocks sur le cote} */}
-							<div className="flex flex-col  gap-2 bg-neutral-800 p-4 rounded-lg shadow-md ">
-								<h2 className="uppercase font-semibold italic">Language</h2>
-								<p className="text-sm md:text-base">{selectedGame.language}</p>
+							<div
+								className="flex flex-col  gap-2 bg-neutral-800 p-4 rounded-lg shadow-md  futura italic"
+								style={futura.style}>
+								<h2
+									className="uppercase font-semibold futura italic"
+									style={futura.style}>
+									Language
+								</h2>
+								<p
+									className="text-sm md:text-base futura normal"
+									style={futura.style}>
+									{selectedGame.language}
+								</p>
 
-								<h2 className="uppercase font-semibold italic">
+								<h2
+									className="uppercase font-semibold futura italic"
+									style={futura.style}>
 									Date de sortie
 								</h2>
 
-								<p className="text-sm md:text-base">
+								<p
+									className="text-sm md:text-base futura normal"
+									style={futura.style}>
 									{new Date(selectedGame.releaseDate).toLocaleDateString()}
 								</p>
 

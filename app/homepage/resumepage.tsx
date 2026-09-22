@@ -1,6 +1,7 @@
 "use client";
 
 import type { games } from "../../types/games";
+import futura from "../font";
 
 type ResumePageProps = {
 	game: games | null;
@@ -24,10 +25,18 @@ const ResumePage = ({ game }: ResumePageProps) => {
 			</div>
 
 			<div className="flex flex-col gap-2">
-				<h2 className="uppercase font-semibold italic">Résumé</h2>
+				<h2
+					className="uppercase font-semibold italic futura italic"
+					style={futura.style}>
+					Résumé
+				</h2>
 				{/* 
 				<p className="text-sm md:text-base">{game.description}</p> */}
-				<p className="text-sm md:text-base">{game.storyline}</p>
+				<p
+					className="text-sm md:text-base futura normal"
+					style={futura.style}>
+					{game.storyline}
+				</p>
 
 				{/* <h2 className="uppercase font-semibold italic">Producteur</h2> */}
 

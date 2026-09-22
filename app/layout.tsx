@@ -5,6 +5,8 @@ import Footer from "@/components/footer/footer";
 
 import "./globals.css";
 
+import futura from "./font";
+
 const geistSans = Geist({
 	variable: "--font-geist-sans",
 	subsets: ["latin"],
