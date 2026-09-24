@@ -26,8 +26,7 @@ export default function Modals({ isOpen, onClose, children }: Props) {
 				justifyContent: "center",
 			}}>
 			<div
-				className="bg-white w-[800px] h-[450px] overflow-y-auto scrollbar-none rounded-lg "
-				// style={{
+				className="bg-white w-[1080px] h-[550px] max-w-[90vw] max-h-[85vh] overflow-y-auto scrollbar-none rounded-lg" // style={{
 				//   backgroundColor: "white",
 				//   padding: "20px",
 				//   borderRadius: "8px",
